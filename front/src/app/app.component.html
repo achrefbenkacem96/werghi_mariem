@@ -1,0 +1,21 @@
+<div class="app-container">
+  <header>
+    <p-menubar [model]="items">
+      <ng-template pTemplate="start">
+        <img src="assets/logo.png" height="40" class="mr-2" alt="Logo">
+      </ng-template>
+    </p-menubar>
+  </header>
+  
+  <main class="content">
+    <p-toast></p-toast>
+    <p-confirmDialog></p-confirmDialog>
+    <router-outlet></router-outlet>
+  </main>
+  
+  <footer>
+    <div class="text-center p-3">
+      © 2025 Application de Gestion des Médicaments
+    </div>
+  </footer>
+</div> 

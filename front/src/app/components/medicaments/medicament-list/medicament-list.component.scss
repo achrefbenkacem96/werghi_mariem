@@ -1,0 +1,48 @@
+.expired-row {
+    background-color: rgba(239, 68, 68, 0.1); // Light red background
+}
+
+.low-stock-row {
+    background-color: rgba(249, 115, 22, 0.1); // Light orange background
+}
+
+.text-orange-500 {
+    color: #f97316;
+}
+
+.text-red-500 {
+    color: #ef4444;
+}
+
+:host ::ng-deep {
+    .p-button {
+        margin-right: 0.5rem;
+    }
+
+    .p-paginator {
+        .p-paginator-current {
+            margin-left: auto;
+        }
+    }
+    
+    .p-datatable.p-datatable-gridlines {
+        .p-datatable-header {
+            padding: 1rem;
+            text-align: left;
+            font-size: 1.5rem;
+        }
+
+        .p-datatable-thead > tr > th {
+            text-align: left;
+        }
+
+        .p-datatable-tbody > tr > td {
+            cursor: auto;
+            padding: 0.5rem 1rem;
+        }
+
+        .p-dropdown-label:not(.p-placeholder) {
+            text-transform: uppercase;
+        }
+    }
+} 

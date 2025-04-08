@@ -1,0 +1,59 @@
+<form [formGroup]="medicamentForm" (ngSubmit)="onSubmit()">
+  <div class="grid">
+    <div class="col-12 field">
+      <label for="nom" class="block">Nom*</label>
+      <input id="nom" type="text" pInputText formControlName="nom" class="w-full" 
+             [ngClass]="{'ng-invalid ng-dirty': submitted && f['nom'].errors}" />
+      <small *ngIf="submitted && f['nom'].errors" class="p-error">
+        Le nom est requis
+      </small>
+    </div>
+
+    <div class="col-12 field">
+      <label for="description" class="block">Description</label>
+      <textarea id="description" rows="3" pInputTextarea formControlName="description" class="w-full"></textarea>
+    </div>
+
+    <div class="col-12 field">
+      <label for="categorie" class="block">Catégorie</label>
+      <p-dropdown id="categorie" [options]="categories" formControlName="categorie" 
+                  optionLabel="label" optionValue="value" [showClear]="true" placeholder="Sélectionner une catégorie"
+                  class="w-full"></p-dropdown>
+    </div>
+
+    <div class="col-6 field">
+      <label for="quantite" class="block">Quantité*</label>
+      <p-inputNumber id="quantite" formControlName="quantite" [showButtons]="true" buttonLayout="horizontal"
+                    spinnerMode="horizontal" decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" 
+                    incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" [min]="0" class="w-full"
+                    [ngClass]="{'ng-invalid ng-dirty': submitted && f['quantite'].errors}"></p-inputNumber>
+      <small *ngIf="submitted && f['quantite'].errors" class="p-error">
+        La quantité est requise et doit être un nombre positif
+      </small>
+    </div>
+
+    <div class="col-6 field">
+      <label for="prix" class="block">Prix (TND)*</label>
+      <p-inputNumber id="prix" formControlName="prix" mode="currency" currency="TND" 
+                   [min]="0" [ngClass]="{'ng-invalid ng-dirty': submitted && f['prix'].errors}" class="w-full"></p-inputNumber>
+      <small *ngIf="submitted && f['prix'].errors" class="p-error">
+        Le prix est requis et doit être un nombre positif
+      </small>
+    </div>
+
+    <div class="col-6 field">
+      <label for="dateExpiration" class="block">Date d'expiration*</label>
+      <p-calendar id="dateExpiration" formControlName="dateExpiration" dateFormat="dd-mm-yy" 
+                [showIcon]="true" [readonlyInput]="true" class="w-full" 
+                [ngClass]="{'ng-invalid ng-dirty': submitted && f['dateExpiration'].errors}"></p-calendar>
+      <small *ngIf="submitted && f['dateExpiration'].errors" class="p-error">
+        La date d'expiration est requise
+      </small>
+    </div>
+  </div>
+
+  <div class="flex justify-content-end mt-4">
+    <button pButton pRipple type="button" label="Annuler" class="p-button-outlined mr-2" (click)="onCancel()"></button>
+    <button pButton pRipple type="submit" label="Enregistrer" [loading]="loading"></button>
+  </div>
+</form> 

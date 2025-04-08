@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="flex justify-content-between align-items-center mb-4">
+    <h2>Médicaments Expirés</h2>
+  </div>
+
+  <p-table [value]="medicaments" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+           currentPageReportTemplate="Affichage {first} à {last} sur {totalRecords} médicaments expirés"
+           [rowsPerPageOptions]="[5, 10, 25]" [loading]="loading" styleClass="p-datatable-gridlines p-datatable-sm"
+           [globalFilterFields]="['nom', 'description', 'categorie']">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="nom">Nom <p-sortIcon field="nom"></p-sortIcon></th>
+        <th pSortableColumn="categorie">Catégorie <p-sortIcon field="categorie"></p-sortIcon></th>
+        <th pSortableColumn="quantite">Quantité <p-sortIcon field="quantite"></p-sortIcon></th>
+        <th pSortableColumn="dateExpiration">Date d'expiration <p-sortIcon field="dateExpiration"></p-sortIcon></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-medicament>
+      <tr class="expired-row">
+        <td>{{ medicament.nom }}</td>
+        <td>{{ medicament.categorie }}</td>
+        <td>{{ medicament.quantite }}</td>
+        <td class="text-red-500">{{ formatDate(medicament.dateExpiration) }}</td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="text-center">Aucun médicament expiré.</td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        Nombre total de médicaments expirés: {{ medicaments.length }}
+      </div>
+    </ng-template>
+  </p-table>
+</div> 

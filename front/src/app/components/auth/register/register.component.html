@@ -1,0 +1,58 @@
+<div class="flex align-items-center justify-content-center">
+  <div class="col-12 md:col-6 lg:col-4">
+    <p-card header="Inscription" styleClass="mt-4">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="field mb-4">
+          <label for="username" class="block">Nom d'utilisateur</label>
+          <input pInputText id="username" formControlName="username" class="w-full"
+                [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['username'].errors }" />
+          <small *ngIf="submitted && f['username'].errors" class="p-error">
+            <span *ngIf="f['username'].errors['required']">Nom d'utilisateur requis</span>
+            <span *ngIf="f['username'].errors['minlength']">Minimum 3 caractères</span>
+            <span *ngIf="f['username'].errors['maxlength']">Maximum 20 caractères</span>
+          </small>
+        </div>
+        
+        <div class="field mb-4">
+          <label for="email" class="block">Email</label>
+          <input pInputText id="email" formControlName="email" type="email" class="w-full"
+                [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['email'].errors }" />
+          <small *ngIf="submitted && f['email'].errors" class="p-error">
+            <span *ngIf="f['email'].errors['required']">Email requis</span>
+            <span *ngIf="f['email'].errors['email']">Email invalide</span>
+            <span *ngIf="f['email'].errors['maxlength']">Maximum 50 caractères</span>
+          </small>
+        </div>
+        
+        <div class="field mb-4">
+          <label for="password" class="block">Mot de passe</label>
+          <p-password id="password" formControlName="password" [toggleMask]="true" styleClass="w-full"
+                    [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['password'].errors }"
+                    [feedback]="true"></p-password>
+          <small *ngIf="submitted && f['password'].errors" class="p-error">
+            <span *ngIf="f['password'].errors['required']">Mot de passe requis</span>
+            <span *ngIf="f['password'].errors['minlength']">Minimum 6 caractères</span>
+            <span *ngIf="f['password'].errors['maxlength']">Maximum 40 caractères</span>
+          </small>
+        </div>
+        
+        <div class="field mb-4">
+          <label for="role" class="block">Rôle</label>
+          <p-dropdown id="role" formControlName="role" [options]="roleOptions" optionLabel="label" optionValue="value" styleClass="w-full"
+                    [ngClass]="{ 'ng-invalid ng-dirty': submitted && f['role'].errors }"></p-dropdown>
+          <small *ngIf="submitted && f['role'].errors" class="p-error">
+            <span *ngIf="f['role'].errors['required']">Rôle requis</span>
+          </small>
+        </div>
+        
+        <div class="flex justify-content-between">
+          <button pButton type="submit" label="S'inscrire" [loading]="loading" class="w-full"></button>
+        </div>
+        
+        <div class="mt-3 text-center">
+          <p>Vous avez déjà un compte? <a routerLink="/login" class="text-blue-400">Connexion</a></p>
+        </div>
+      </form>
+    </p-card>
+  </div>
+</div> 

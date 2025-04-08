@@ -1,0 +1,17 @@
+.text-orange-500 {
+  color: #f97316;
+}
+
+.text-red-500 {
+  color: #ef4444;
+}
+
+.low-stock-row {
+  background-color: rgba(249, 115, 22, 0.1) !important;
+}
+
+:host ::ng-deep {
+  .p-inputnumber {
+    width: 7rem;
+  }
+} 

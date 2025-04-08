@@ -1,0 +1,86 @@
+<div class="card">
+  <div class="card-header flex justify-content-between align-items-center">
+    <h2 class="mb-0">Liste des Médicaments</h2>
+    <div class="flex align-items-center">
+      <button pButton pRipple label="Nouveau Médicament" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+      <button pButton pRipple label="Médicaments Expirés" icon="pi pi-exclamation-triangle" class="p-button-warning mr-2" routerLink="/medicaments/expired"></button>
+      <button pButton pRipple label="Stock Bas" icon="pi pi-arrow-down" class="p-button-help" routerLink="/medicaments/low-stock"></button>
+    </div>
+  </div>
+
+  <p-table 
+    [value]="medicaments" 
+    [paginator]="true" 
+    [rows]="10" 
+    [showCurrentPageReport]="true"
+    [loading]="loading"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} médicaments"
+    [rowsPerPageOptions]="[5, 10, 25, 50]"
+    [globalFilterFields]="['name', 'category']"
+    styleClass="p-datatable-gridlines">
+
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-end">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <!-- <input pInputText type="text" placeholder="Rechercher..." #searchInput (input)="dt.filterGlobal(searchInput.value, 'contains')" /> -->
+        </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name">Nom <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="category">Catégorie <p-sortIcon field="category"></p-sortIcon></th>
+        <th pSortableColumn="quantity">Quantité <p-sortIcon field="quantity"></p-sortIcon></th>
+        <th pSortableColumn="prix">Prix <p-sortIcon field="prix"></p-sortIcon></th>
+        <th pSortableColumn="expirationDate">Date d'expiration <p-sortIcon field="expirationDate"></p-sortIcon></th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-medicament>
+      <tr [ngClass]="{ 'expired-row': isExpired(medicament.expirationDate), 'low-stock-row': isLowStock(medicament.quantity) && !isExpired(medicament.expirationDate) }">
+        <td>{{ medicament.nom }}</td>
+        <td>{{ medicament.categorie }}</td>
+        <td [ngClass]="{'text-orange-500': isLowStock(medicament.quantite)}">{{ medicament.quantite }}</td>
+        <td>{{ medicament.prix | number:'1.2-2' }} د.ت</td>
+        <td [ngClass]="{'text-red-500': isExpired(medicament.dateExpiration)}">{{ formatDate(medicament.dateExpiration) }}</td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editMedicament(medicament)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" type="button" (click)="deleteMedicament(medicament)"></button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6" class="text-center p-4">Aucun médicament trouvé</td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        Total des médicaments: {{medicaments ? medicaments.length : 0}}
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- Dialog pour ajouter/éditer un médicament -->
+<p-dialog 
+  [(visible)]="showMedicamentDialog" 
+  [style]="{width: '500px'}" 
+  header="Détails du Médicament" 
+  [modal]="true" 
+  styleClass="p-fluid">
+  
+  <ng-template pTemplate="content">
+    <app-medicament-form 
+      [medicament]="selectedMedicament"
+      (save)="saveMedicament($event)"
+      (cancel)="hideDialog()">
+    </app-medicament-form>
+  </ng-template>
+</p-dialog>
+
